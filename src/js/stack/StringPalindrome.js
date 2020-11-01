@@ -1,8 +1,7 @@
+var StringReverse = require("./StringReverse");
 /**
  * Checking whether the string is palindrome or not using the stack
  */
-var Stack = require("./Stack");
-
 class StringPalindrome {
   /**
    * constructor for the class
@@ -10,7 +9,7 @@ class StringPalindrome {
    */
   constructor(input) {
     this.input = input;
-    this.Stack = new Stack();
+    this.stringReverse = new StringReverse(input);
   }
   /**
    * Setting the new input for the class
@@ -18,7 +17,7 @@ class StringPalindrome {
    */
   setInput(input) {
     this.input = input;
-    this.Stack.flush();
+    this.stringReverse = new StringReverse(input);
   }
   /**
    * Checking whether string is palindrome or not
@@ -27,15 +26,7 @@ class StringPalindrome {
     if (!this.input) {
       throw new Error("Please provide relevant input string!!");
     }
-    let inputLength = this.input.length;
-    for (let i = 0; i < inputLength; i++) {
-      this.Stack.push(this.input.charAt(i));
-    }
-    this.Stack.display();
-    let reversedString = "";
-    while (!this.Stack.isEmpty()) {
-      reversedString += this.Stack.pop();
-    }
+    let reversedString = this.stringReverse.reverse();
     console.log(`Reversed String`, reversedString);
     if (this.input == reversedString) {
       console.log(`'${this.input}' is a palindrome`);
@@ -49,7 +40,7 @@ class StringPalindrome {
   static demo() {
     let myStringPalindomeChecker = new StringPalindrome("prashant");
     myStringPalindomeChecker.isStringPalindrome();
-    myStringPalindomeChecker.setInput('racecar');
+    myStringPalindomeChecker.setInput("racecar");
     myStringPalindomeChecker.isStringPalindrome();
   }
 }
