@@ -22,4 +22,18 @@ Basic examples for implementation :-
       2. Binary Search
    
    2. Insertion 
-   3. Deletion 
+   3. Deletion
+
+3. Stack 
+   1. Generic Stack
+   2. Reverse the String and check 
+   3. Palindrome check
+   4. Bracket Match
+   5. Infix to Postfix conversion for the arithmetic expressions
+   6. Evaluate postfix expressions
+   7. Creating Stack Via LinkedList (Will be useful once Linked List is being covered)
+
+4. Queue
+   1. 
+5. LinkedList
+   1. 
