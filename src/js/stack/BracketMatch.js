@@ -4,6 +4,19 @@
  */
 var Stack = require("./Stack");
 
+// Error codes
+const ErrorConstant = {
+  NO_MATCHING_OPENING_BRACKETS: (char, inputExpression) => {
+    return `\nThere is no matching opening bracket found for ${char} in ${inputExpression}.`;
+  },
+  EXTRA_CLOSING_BRACKETS: (char, inputExpression) => {
+    return `\nThis is extra closing bracket '${char}' present in ${inputExpression}.`;
+  },
+  EXTRA_OPENING_BRACKETS: (inputExpression) => {
+    return `\nThere is/are? extra opening brackets are being present in ${inputExpression}.`;
+  },
+};
+
 class BracketMatch {
   /**
    * constructor function
@@ -12,6 +25,8 @@ class BracketMatch {
   constructor(inputExpression) {
     this.inputExpression = inputExpression;
     this.stack = new Stack();
+    this.isExpressionValid = true;
+    this.errorCode;
   }
   /**
    * setting the expression input
@@ -20,13 +35,14 @@ class BracketMatch {
   setExpression(inputExpression) {
     this.inputExpression = inputExpression;
     this.stack = new Stack();
+    this.isExpressionValid = true;
+    this.errorCode = null;
   }
   /**
    * Matching the brackets in the input Expression
    */
   matchBrackets() {
     const inputLength = this.inputExpression.length;
-    let isExpressionValid = true;
     for (let i = 0; i < inputLength; i++) {
       const char = this.inputExpression.charAt(i);
       switch (char) {
@@ -45,48 +61,70 @@ class BracketMatch {
               (tmpChar !== "[" && char == "]") ||
               (tmpChar !== "(" && char == ")")
             ) {
-              console.log(
-                `\nThere is no matching opening bracket found for ${char} in ${this.inputExpression}.`
+              this.isExpressionValid = false;
+              this.errorCode = ErrorConstant.NO_MATCHING_OPENING_BRACKETS(
+                char,
+                this.inputExpression
               );
-              isExpressionValid = false;
             }
           } else {
-            console.log(
-              `\nThis is extra closing bracket '${char}' present in ${this.inputExpression}.`
+            this.isExpressionValid = false;
+            this.errorCode = ErrorConstant.EXTRA_CLOSING_BRACKETS(
+              char,
+              this.inputExpression
             );
-            isExpressionValid = false;
           }
           break;
       }
       // break the loop on the first mistake.
-      if (!isExpressionValid) {
+      if (!this.isExpressionValid) {
         break;
       }
     }
-    if (isExpressionValid) {
+    if (this.isExpressionValid) {
       // There is still possibility that extra brackets being present here.
       if (!this.stack.isEmpty()) {
-        console.log(
-          `\nThere is/are extra opening brackets are being present in ${this.inputExpression}.`
+        this.isExpressionValid = false;
+        this.errorCode = ErrorConstant.EXTRA_OPENING_BRACKETS(
+          this.inputExpression
         );
-      } else {
-        console.log(`\n${this.inputExpression} : Expression is perfect !!!`);
       }
     }
   }
+  /**
+   * Showing the result of the comparsion for the inputExpression
+   */
+  displayResult() {
+    if (this.isExpressionValid) {
+      console.log(`\n${this.inputExpression} : Expression is perfect !!!`);
+    } else {
+      console.log(this.errorCode);
+    }
+  }
+
   /**
    * Function to demo the usage of the program.
    */
   static demo() {
     let bracketMatch = new BracketMatch(`{a+(c+d)-b}`);
     bracketMatch.matchBrackets();
+    bracketMatch.displayResult();
+
     bracketMatch.setExpression(`{a+9-(c+d-e+[a+b)}`); //un-even closing
     bracketMatch.matchBrackets();
+    bracketMatch.displayResult();
+
     bracketMatch.setExpression(`{a+9-(c+d-e+[a+b])}}`); //extra closing
     bracketMatch.matchBrackets();
+    bracketMatch.displayResult();
+
     bracketMatch.setExpression(`{{a+9-(c+d-e+[a+b])}`); //extra opening
     bracketMatch.matchBrackets();
+    bracketMatch.displayResult();
   }
 }
 
-BracketMatch.demo();
+// un-comment this line of code to see the functionality in motion
+// BracketMatch.demo();
+
+module.exports = BracketMatch;
