@@ -79,14 +79,15 @@ class InfixToPostfix {
     while (!this.stack.isEmpty()) {
       let operatorOnTop = this.stack.pop();
       let operatorOnTopPrecedence = this.getPrecedenceOfOperator(operatorOnTop);
-      if (operatorOnTopPrecedence > inputOperatorPrecedence) {
-        this.outputExpression += operatorOnTopPrecedence;
+      if (operatorOnTopPrecedence >= inputOperatorPrecedence) {
+        this.outputExpression += operatorOnTop;
       } else {
         this.stack.push(operatorOnTop);
         break;
       }
     }
     this.stack.push(inputOperator);
+    // this.stack.display();
   }
 
   /**
@@ -172,4 +173,7 @@ class InfixToPostfix {
   }
 }
 
-InfixToPostfix.demo();
+// Un-comment this line to see the functionality
+// InfixToPostfix.demo();
+
+module.exports = InfixToPostfix;
