@@ -21,31 +21,16 @@ class QuickSort {
   partitionIt(left, right, pivot) {
     let leftPtr = left - 1;
     let rightPtr = right;
-    // console.log(`left : ${leftPtr}, right : ${rightPtr}, pivot : ${pivot}`);
     while (true) {
-      while (this.array[++leftPtr] < pivot) {
-        // console.log(
-        //   `leftPtr .. ${leftPtr} and value at this : ${this.array[leftPtr]}`
-        // );
-      }
-      // console.log(`leftPtr .. ${leftPtr}`);
-      while (rightPtr > 0 && this.array[--rightPtr] > pivot) {
-        // console.log(
-        //   `rightPtr .. ${rightPtr} and value at this ${this.array[rightPtr]}`
-        // );
-      }
+      while (this.array[++leftPtr] < pivot) {}
+      while (rightPtr > 0 && this.array[--rightPtr] > pivot) {}
       if (leftPtr >= rightPtr) {
-        // console.log(`before breaking the main loop indexes`, leftPtr, rightPtr);
         break;
       } else {
-        // console.log(`intermediate swapping index`, leftPtr, rightPtr);
         swap(leftPtr, rightPtr, this.array);
-        // console.log(`Array after the intermediate swapping...`, this.array);
       }
     }
-    // console.log(`final swapping index`, leftPtr, right);
     swap(leftPtr, right, this.array);
-    // console.log(`Array after the partition...`, this.array);
     return leftPtr;
   }
 
@@ -61,12 +46,7 @@ class QuickSort {
       return;
     } else {
       let pivot = this.array[right];
-      // console.log("pivot selected..", pivot);
       let partitionIndex = this.partitionIt(left, right, pivot);
-      // console.log(
-      //   `partitionIndex after dividing the array .. `,
-      //   partitionIndex
-      // );
       this.sort(left, partitionIndex - 1);
       this.sort(partitionIndex + 1, right);
     }
@@ -75,8 +55,6 @@ class QuickSort {
     let size = 17,
       quickSort = new QuickSort(size);
     console.log(`Array input..`, quickSort.array);
-    // quickSort.array = [132, 775, 415, 886, 71, 244, 822];
-    // console.log(`Array input..`, quickSort.array);
     quickSort.sort(0, size - 1);
     console.log("Sorted array..", quickSort.array);
   }
