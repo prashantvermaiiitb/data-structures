@@ -78,6 +78,6 @@ class Stack {
 }
 
 // @todo Un-comment this line to see the Stack in-action
-//Stack.demo();
+Stack.demo();
 
 module.exports = Stack;
