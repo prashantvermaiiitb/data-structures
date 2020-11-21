@@ -1,4 +1,6 @@
 "use strict";
+
+var Stack = require("../stack/Stack");
 /**
  * Binary Tree data structure
  * - have Root node
@@ -141,8 +143,6 @@ class BinarySearchTree {
       }
     }
   }
-
-  insert(data) {}
 
   /**
    * Getting the inorder successor of the node that's supposed to be deleted.
@@ -331,6 +331,82 @@ class BinarySearchTree {
     }
   }
   /**
+   * Queue implementation for the level order
+   */
+  levelOrderQueue() {
+    //approach 1
+    let result = [];
+    let Q = [];
+    if (this.root !== null) {
+      Q.push(this.root);
+      while (Q.length > 0) {
+        let tempNode = Q.shift(); // get the Front element out of it
+        result.push(tempNode);
+        tempNode.left !== null && Q.push(tempNode.left);
+        tempNode.right !== null && Q.push(tempNode.right);
+      }
+      result.forEach((node) => {
+        node.display();
+      });
+    } else {
+      console.log(`Tree is empty and nothing to display :(`);
+    }
+  }
+
+  /**
+   * stack implementation for the level order
+   */
+  levelOrderStack() {
+    //approach 2
+    /**
+     * take 2 stacks
+     * 1 global - push this.root in that
+     * boolean flag for content presence
+     * 1 local stack
+     * while global has content
+     *    - pop() of the global
+     *    - put it in the local
+     *    - display the local
+     *    - push the left / right child in local
+     *    while the local is not empty
+     *       - pop() the local and put that in global
+     */
+    let myGlobalStack = new Stack(),
+      isLocalStackEmpty = false;
+
+    myGlobalStack.push(this.root);
+    while (!isLocalStackEmpty) {
+      let localStack = new Stack();
+      isLocalStackEmpty = true;
+      while (!myGlobalStack.isEmpty()) {
+        let tempNode = myGlobalStack.pop();
+        if (tempNode !== null) {
+          tempNode.display();
+          localStack.push(tempNode.left);
+          localStack.push(tempNode.right);
+          if (tempNode.left !== null || tempNode.right !== null) {
+            isLocalStackEmpty = false;
+          }
+        } else {
+          localStack.push(null);
+          localStack.push(null);
+        }
+      }
+      while (!localStack.isEmpty()) {
+        myGlobalStack.push(localStack.pop());
+      }
+    }
+  }
+
+  /**
+   * Doing breadth first search traversal for the tree
+   * @param {*} node
+   */
+  levelOrder(type = 2) {
+    type == 2 ? this.levelOrderQueue() : this.levelOrderStack();
+  }
+
+  /**
    * Traversing the tree
    * @param {*} type
    */
@@ -344,6 +420,15 @@ class BinarySearchTree {
         console.log(`POST ORDER DISPLAY OF THE TREE :`);
         this.postOrder(this.root);
         break;
+      case 4:
+        console.log(`Queue LEVEL ORDER DISPLAY OF THE TREE :`);
+        this.levelOrder(2);
+        break;
+      case 5:
+        console.log(`Stack LEVEL ORDER DISPLAY OF THE TREE :`);
+        this.levelOrder(1);
+        break;
+
       case 2:
       default:
         console.log(`IN ORDER DISPLAY OF THE TREE :`);
@@ -351,6 +436,51 @@ class BinarySearchTree {
         break;
     }
   }
+  /**
+   * If the delta among the tree heights is less than equal to 1
+   * @param {*} node
+   */
+  isTreeBalanced(node) {
+    this.findMaxHeight(node) - this.findMinHeight(node) <= 1;
+  }
+  /**
+   * Getting the minimum height of the subtree
+   * @param {*} node
+   */
+  findMinHeight(node = this.root) {
+    if (node === null) {
+      return -1;
+    }
+    const left = this.findMinHeight(node.left);
+    const right = this.findMinHeight(node.right);
+    if (left < right) {
+      //whichever is small should be taken
+      return left + 1;
+    } else {
+      return right + 1;
+    }
+  }
+
+  /**
+   * finding the maximum height of the tree
+   * @param {*} node
+   */
+  findMaxHeight(node = this.root) {
+    if (node === null) {
+      return -1;
+    }
+    const left = this.findMaxHeight(node.left);
+    const right = this.findMaxHeight(node.right);
+    if (left > right) {
+      return left + 1;
+    } else {
+      return right + 1;
+    }
+  }
+
+  /**
+   * Demo for the functionality
+   */
   static demo() {
     let myTree = new BinarySearchTree();
     myTree.add(81, 1); //inserting through recursive
@@ -368,17 +498,24 @@ class BinarySearchTree {
     myTree.add(200);
     // myTree.traverse(1);
     myTree.traverse(2);
+    myTree.traverse(4);
+    myTree.traverse(5);
     console.log(`minimum element in the tree`, myTree.findMin());
     console.log(`maximum element in the tree`, myTree.findMax());
     console.log(myTree.search(100));
-    console.log(myTree.root);
+    // console.log(myTree.root);
+
+    console.log("------------------------------------------------------");
+    console.log(`Minimum height of the tree`, myTree.findMinHeight());
+    console.log(`Maximum height of the tree`, myTree.findMaxHeight());
+    console.log("------------------------------------------------------");
 
     console.log(
       `\nremoving 60 from the Tree as leaf node left child example.\n`
     );
     myTree.remove(60);
     // myTree.traverse(2);
-    console.log(myTree.root);
+    // console.log(myTree.root);
 
     console.log(
       `\nremoving 200 from the Tree as leaf node left child example.\n`
@@ -388,11 +525,16 @@ class BinarySearchTree {
     console.log(`maximum element in the tree`, myTree.findMax());
     console.log(myTree.root);
 
+    console.log("------------------------------------------------------");
+    console.log(`Minimum height of the tree`, myTree.findMinHeight());
+    console.log(`Maximum height of the tree`, myTree.findMaxHeight());
+    console.log("------------------------------------------------------");
+
     console.log(`\nremoving 40 from the Tree as 2 child node example.\n`);
     myTree.remove(40);
     myTree.traverse(2);
     console.log(`minimum element in the tree`, myTree.findMin());
-    console.log(myTree.root);
+    // console.log(myTree.root);
 
     console.log(
       `\nremoving 100 from the Tree as 2 child node with inorder successor example.\n`
@@ -400,7 +542,12 @@ class BinarySearchTree {
     myTree.remove(100, 1);
     myTree.traverse(2);
     console.log(`Maximum element in the tree`, myTree.findMax());
-    console.log(myTree.root);
+    // console.log(myTree.root);
+
+    console.log("------------------------------------------------------");
+    console.log(`Minimum height of the tree`, myTree.findMinHeight());
+    console.log(`Maximum height of the tree`, myTree.findMaxHeight());
+    console.log("------------------------------------------------------");
   }
 }
 BinarySearchTree.demo();
