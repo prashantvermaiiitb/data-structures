@@ -151,7 +151,7 @@ class HashTable {
    * Static function for the Demo functionality
    */
   static demo() {
-    const hashTable = new HashTable();
+    const hashTable = new HashTable(7); //try changing the number of the buckets
 
     hashTable.add("John", "father");
     hashTable.add("Jill", "mother");
