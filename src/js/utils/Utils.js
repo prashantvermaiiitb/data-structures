@@ -26,7 +26,53 @@ function swap(indexA, indexB, array) {
   array[indexB] = tmp;
 }
 
+/**
+ * Changing the Base for the Number
+ * @param {*} decimal
+ * @param {*} radix
+ */
+function changeToOtherBase(number, radix) {
+  let result = [];
+  while (number >= 1) {
+    result.push(number % radix);
+    number = Math.floor(number / radix);
+  }
+  return result.reverse().join("");
+}
+
+/**
+ * Change the base of the number recursively
+ * @param {*} number
+ * @param {*} radix
+ */
+function changeToOtherBaseRecursive(number, radix) {
+  if (number <= radix - 1) {
+    return number;
+  } else {
+    let prefix = changeToOtherBaseRecursive(Math.floor(number / radix), radix);
+    let suffix = number % radix;
+    return `${prefix}${suffix}`;
+  }
+}
+
 module.exports = {
   getArray: formArray,
   swap,
+  changeToOtherBase,
 };
+
+console.log(`updating the base for 23 is : `, changeToOtherBase(15, 2));
+console.log(
+  `updating the base for 23 is : `,
+  changeToOtherBaseRecursive(15, 2)
+);
+console.log(`updating the base for 23 is : `, changeToOtherBase(15, 16));
+console.log(
+  `updating the base for 23 is : `,
+  changeToOtherBaseRecursive(15, 16)
+);
+console.log(`updating the base for 23 is : `, changeToOtherBase(15, 8));
+console.log(
+  `updating the base for 23 is : `,
+  changeToOtherBaseRecursive(15, 8)
+);
