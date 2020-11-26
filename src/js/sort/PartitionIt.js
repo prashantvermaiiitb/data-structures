@@ -1,4 +1,4 @@
-var { getArray, swap } = require("./Utils");
+var { getArray, swap } = require("../utils/Utils");
 
 /**
  * Partition the array

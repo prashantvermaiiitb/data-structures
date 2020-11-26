@@ -1,4 +1,4 @@
-var { getArray } = require("./Utils");
+var { getArray } = require("../utils/Utils");
 /**
  * shell sort is the super set of Insertion sort
  * It works on knuth method h = (3*h+1)

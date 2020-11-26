@@ -1,4 +1,4 @@
-var { getArray, swap } = require("./Utils");
+var { getArray, swap } = require("../utils/Utils");
 /**
  * Quick sort is fastest sorting algorithm
  * Best-case : O(nlogn)

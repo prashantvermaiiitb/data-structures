@@ -1,5 +1,5 @@
 var insertionSort = require("./InsertionSort");
-var { getArray } = require("./Utils");
+var { getArray } = require("../utils/Utils");
 /**
  * Merge sort Algorithm
  * Best Case : O(n log n)
