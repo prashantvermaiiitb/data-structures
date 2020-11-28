@@ -34,6 +34,12 @@ class SimpleQueue {
     return this.collection.length;
   }
   /**
+   * Size of the queue of 0
+   */
+  isEmpty() {
+    return this.size() === 0;
+  }
+  /**
    * Display the queue
    */
   display() {
@@ -50,11 +56,13 @@ class SimpleQueue {
     simpleQueue.enQueue(4);
     simpleQueue.enQueue(5);
     simpleQueue.display();
-    console.log(simpleQueue.front())
+    console.log(simpleQueue.front());
     console.log(simpleQueue.size());
     console.log(simpleQueue.deQueue());
     simpleQueue.display();
     simpleQueue.enQueue(51);
   }
 }
-SimpleQueue.demo();
+// SimpleQueue.demo();
+
+module.exports = new SimpleQueue();
