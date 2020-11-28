@@ -31,7 +31,7 @@ class DepthFirstSearch {
 
     let root = vertexList[0]; //get root node
 
-    root.setIsVisited(true); //visit the node
+    root.setVisited(true); //visit the node
     // console.log(root);
     root.display(); //display the node
     this.stack.push(0); //push this on stack
@@ -41,7 +41,7 @@ class DepthFirstSearch {
       if (top === -1) {
         this.stack.pop();
       } else {
-        vertexList[top].setIsVisited(true);
+        vertexList[top].setVisited(true);
         vertexList[top].display();
         this.stack.push(top); //pushing the next index
       }

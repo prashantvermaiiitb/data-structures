@@ -1,4 +1,5 @@
 var depthFirstSearch = require("./DepthFirstSearch");
+var breadthFirstSearch = require("./BreadthFirstSearch");
 /**
  * Sample class for the Graph implementation.
  */
@@ -15,7 +16,7 @@ class Vertex {
    * flag for the visited or not
    * @param {*} visited
    */
-  setIsVisited(visited) {
+  setVisited(visited) {
     this.visited = visited;
   }
   /**
@@ -108,7 +109,7 @@ class Graph {
    */
   unMarkAllVertexAsUnvisited() {
     for (let i = 0; i < this.currentVertices; i++) {
-      this.vertexList[i].setIsVisited(false);
+      this.vertexList[i].setVisited(false);
     }
   }
   /**
@@ -124,21 +125,25 @@ class Graph {
   static demo() {
     let myGraph = new Graph(5);
     //adding nodes in the Graph
-    myGraph.addVertex("A");
-    myGraph.addVertex("B");
-    myGraph.addVertex("C");
-    myGraph.addVertex("D");
-    myGraph.addVertex("E");
+    myGraph.addVertex("A"); //0
+    myGraph.addVertex("B"); //1
+    myGraph.addVertex("C"); //2
+    myGraph.addVertex("D"); //3
+    myGraph.addVertex("E"); //4
 
     //adding edges in the Graph
-    myGraph.addEdge(0, 1);
-    myGraph.addEdge(1, 2);
-    myGraph.addEdge(0, 3);
-    myGraph.addEdge(3, 4);
+    myGraph.addEdge(0, 1); //AB
+    myGraph.addEdge(1, 2); //BC
+    myGraph.addEdge(0, 3); //AD
+    myGraph.addEdge(3, 4); //DE
 
     console.log(myGraph);
 
-    depthFirstSearch.search(myGraph);
+    console.log("Doing Depth First search....");
+    depthFirstSearch.search(myGraph); //created and exported Object
+
+    console.log("Doing Breadth First search....");
+    breadthFirstSearch(myGraph); //created function and exported it
   }
 }
 
