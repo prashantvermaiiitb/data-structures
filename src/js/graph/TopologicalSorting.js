@@ -25,7 +25,7 @@ module.exports = function sort(graph, debug = false) {
         console.log(
           `count of the vertices before deletion : ${graph.getCurrentVertices()}`
         );
-      graph.deleteVertex(currentVertexIndex);
+      graph.deleteVertex(currentVertexIndex, debug);
       debug &&
         console.log(
           `count of the vertices after deletion : ${graph.getCurrentVertices()}`
