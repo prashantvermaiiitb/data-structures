@@ -16,12 +16,12 @@ class MinimumSpanningTree {
    * generating tree through depth first search / traversal
    * @param {*} graph
    */
-  getMSTFromDepthFirstSearch(graph) {
+  getMSTFromDepthFirstSearch(graph, index = 0) {
     console.log("Generating the MST from DFS");
     let vertextList = graph.getVertexList();
-    let root = vertextList[0];
+    let root = vertextList[index];
     root.setVisited(true);
-    this.stack.push(0);
+    this.stack.push(index);
     while (!this.stack.isEmpty()) {
       let currentVertexIndex = this.stack.peek();
       let adjacentVertexIndex = graph.getUnvisitedVertex(currentVertexIndex);

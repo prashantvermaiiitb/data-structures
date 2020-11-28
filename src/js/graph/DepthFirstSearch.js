@@ -24,17 +24,17 @@ class DepthFirstSearch {
    *  - if not able to pop-off from the stack
    *  - else push the vertex on the stack and continue
    */
-  search(graph) {
+  search(graph, index = 0) {
     const vertexList = graph.getVertexList();
 
     // console.log(vertexList);
 
-    let root = vertexList[0]; //get root node
+    let root = vertexList[index]; //get root node
 
     root.setVisited(true); //visit the node
     // console.log(root);
     root.display(); //display the node
-    this.stack.push(0); //push this on stack
+    this.stack.push(index); //push this on stack
     while (!this.stack.isEmpty()) {
       let top = graph.getUnvisitedVertex(this.stack.peek());
       //   console.log(top);

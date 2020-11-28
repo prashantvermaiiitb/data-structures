@@ -274,6 +274,45 @@ class Graph {
   }
 
   /**
+   * Column to be updated
+   * @param {*} columnToBeRead
+   * @param {*} columnToBeUpdated
+   */
+  createTransitiveClosureGraph(columnToBeRead, columnToBeUpdated) {
+    for (let row = 0; row < this.currentVertices; row++) {
+      if (
+        this.adjacentMatrix[row][columnToBeRead] === 1 &&
+        this.adjacentMatrix[row][columnToBeUpdated] !== 1
+      ) {
+        this.adjacentMatrix[row][columnToBeUpdated] = 1;
+      }
+    }
+  }
+
+  /**
+   * generating transitive closure graph
+   */
+  applyWarshallAlgo() {
+    for (let row = 0; row < this.currentVertices; row++) {
+      for (let col = 0; col < this.currentVertices; col++) {
+        if (this.adjacentMatrix[row][col] === 1) {
+          this.createTransitiveClosureGraph(row, col);
+        }
+      }
+    }
+  }
+
+  /**
+   * Generating the connectivity table for the directed graph
+   */
+  getConnectivityTableForDirectedGraph() {
+    for (let i = 0; i < this.currentVertices; i++) {
+      minimumSpanningTree.getMSTFromDepthFirstSearch(this, i); //created and exported Object
+      this.unMarkAllVertexAsUnvisited(); //un-marking so that next operation could be performed on the graph
+    }
+  }
+
+  /**
    * Demo the functionality for the Depth first search
    */
   static demo() {
@@ -329,6 +368,24 @@ class Graph {
     console.log(myGraph.displayGraph());
     console.log("Performing topological sorting");
     console.log(topologicalSort(myGraph).join(" "));
+
+    console.log("Warshall Algorithm demo");
+    myGraph = new Graph(5);
+    myGraph.addVertex("A"); //0
+    myGraph.addVertex("B"); //1
+    myGraph.addVertex("C"); //2
+    myGraph.addVertex("D"); //3
+    myGraph.addVertex("E"); //4
+
+    myGraph.addEdge(0, 1, true); //AB
+    myGraph.addEdge(1, 2, true); //BC
+    myGraph.addEdge(1, 3, true); //BD
+    myGraph.addEdge(4, 0, true); //EA
+
+    console.log(myGraph.displayGraph());
+    myGraph.getConnectivityTableForDirectedGraph();
+    myGraph.applyWarshallAlgo();
+    console.log(myGraph.displayGraph());
   }
 }
 
