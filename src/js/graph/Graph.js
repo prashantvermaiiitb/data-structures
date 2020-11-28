@@ -1,5 +1,6 @@
 var depthFirstSearch = require("./DepthFirstSearch");
 var breadthFirstSearch = require("./BreadthFirstSearch");
+var minimumSpanningTree = require("./MinimumSpanningTree");
 /**
  * Sample class for the Graph implementation.
  */
@@ -24,6 +25,12 @@ class Vertex {
    */
   display() {
     console.log(`${this.data} is visited : ${this.visited} now !!`);
+  }
+  /**
+   * returning the data for the node
+   */
+  getData() {
+    return this.data;
   }
 }
 
@@ -79,6 +86,16 @@ class Graph {
    */
   displayVertex(index) {
     console.log(this.vertexList[index].display());
+  }
+  /**
+   * Display an edge
+   * @param {*} from
+   * @param {*} to
+   */
+  displayEdge(from, to) {
+    console.log(
+      `${this.vertexList[from].getData()}${this.vertexList[to].getData()}`
+    );
   }
 
   /**
@@ -144,6 +161,13 @@ class Graph {
 
     console.log("Doing Breadth First search....");
     breadthFirstSearch(myGraph); //created function and exported it
+
+    console.log("generating the Minimum spanning tree");
+    minimumSpanningTree.getMSTFromDepthFirstSearch(myGraph);
+
+    myGraph.unMarkAllVertexAsUnvisited(); //un-marking so that next operation could be performed on the graph
+
+    minimumSpanningTree.getMSTFromBreadthFirstSearch(myGraph);
   }
 }
 

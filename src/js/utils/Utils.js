@@ -61,18 +61,18 @@ module.exports = {
   changeToOtherBase,
 };
 
-console.log(`updating the base for 23 is : `, changeToOtherBase(15, 2));
-console.log(
-  `updating the base for 23 is : `,
-  changeToOtherBaseRecursive(15, 2)
-);
-console.log(`updating the base for 23 is : `, changeToOtherBase(15, 16));
-console.log(
-  `updating the base for 23 is : `,
-  changeToOtherBaseRecursive(15, 16)
-);
-console.log(`updating the base for 23 is : `, changeToOtherBase(15, 8));
-console.log(
-  `updating the base for 23 is : `,
-  changeToOtherBaseRecursive(15, 8)
-);
+// console.log(`updating the base for 23 is : `, changeToOtherBase(15, 2));
+// console.log(
+//   `updating the base for 23 is : `,
+//   changeToOtherBaseRecursive(15, 2)
+// );
+// console.log(`updating the base for 23 is : `, changeToOtherBase(15, 16));
+// console.log(
+//   `updating the base for 23 is : `,
+//   changeToOtherBaseRecursive(15, 16)
+// );
+// console.log(`updating the base for 23 is : `, changeToOtherBase(15, 8));
+// console.log(
+//   `updating the base for 23 is : `,
+//   changeToOtherBaseRecursive(15, 8)
+// );
