@@ -23,70 +23,32 @@
  *   finally this will be printed on the screen to show the distance metrics
  */
 
-class Vertex {
-  constructor(data) {
-    this.data = data;
-    this.inTree = false;
-  }
-  getData() {
-    return this.data;
-  }
-  setInTree(inTree) {
-    this.inTree = inTree;
-  }
-  display() {
-    console.log(`${this.data} & inTree ${this.inTree}`);
-  }
-}
+var Vertex = require("./Vertex");
+var SimpleGraph = require("./SimpleGraph");
 
+/**
+ * Object storing Distance(Parent) information
+ */
 class DistanceParent {
+  /**
+   * constructor
+   * @param {*} index
+   * @param {*} distance
+   */
   constructor(index, distance) {
     this.index = index;
     this.distance = distance;
   }
 }
 
-class Graph {
+/**
+ * Creating Weighted Graph
+ */
+class Graph extends SimpleGraph {
   constructor(maxSize = 5) {
-    this.maxSize = maxSize;
-    this.currentVertices = 0;
-    this.vertexList = new Array(maxSize);
-    this.adjacencyMatrix = [];
-    for (let i = 0; i < maxSize; i++) {
-      this.adjacencyMatrix.push(new Array(maxSize).fill(Infinity));
-    }
+    super(maxSize);
     this.shortestPaths = []; //max number of paths is Vertices-1
     this.nTree = 0; //number of nodes in the Shortest Path Tree
-  }
-  displayGraph() {
-    let displayInformation = [];
-    displayInformation.push(
-      "  " +
-        this.vertexList
-          .filter((value, index) => index < this.currentVertices)
-          .map((vertex) => {
-            return vertex.getData();
-          })
-          .join("   ") //catering for 'inf' character count
-    );
-
-    for (let i = 0; i < this.currentVertices; i++) {
-      displayInformation.push(
-        this.vertexList[i].getData() +
-          " " +
-          this.adjacencyMatrix[i]
-            .filter((value, index) => index < this.currentVertices)
-            .map((value, index) => (value === Infinity ? "inf" : value))
-            .join(" ")
-      );
-    }
-    return displayInformation;
-  }
-  addVertex(data) {
-    this.vertexList[this.currentVertices++] = new Vertex(data);
-  }
-  addEdge(source, destination, weight) {
-    this.adjacencyMatrix[source][destination] = weight;
   }
 
   // while all vertices are in tree
